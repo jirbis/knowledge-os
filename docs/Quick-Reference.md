@@ -248,6 +248,11 @@ SUGGEST organization
 SUGGEST assembly
 ```
 
+**Russian aliases:**
+- ПРЕДЛОЖИ извлечение → SUGGEST extract
+- ПРЕДЛОЖИ организацию → SUGGEST organization
+- ПРЕДЛОЖИ сборку → SUGGEST assembly
+
 ### MARK (content candidates)
 
 ```
@@ -257,6 +262,11 @@ MARK as article candidate
 MARK as blog_post candidate
 ```
 
+**Russian aliases:**
+- ОТМЕТИТЬ как главу → MARK as book_chapter candidate
+- ОТМЕТИТЬ как статью → MARK as article candidate
+- ОТМЕТИТЬ как пост → MARK as blog_post candidate
+
 ### SET (candidate status)
 
 ```
@@ -265,6 +275,37 @@ SET status: solid
 SET status: used
 SET status: deprecated
 ```
+
+**Russian aliases:**
+- УСТАНОВИТЬ статус: draft → SET status: draft
+- УСТАНОВИТЬ статус: solid → SET status: solid
+- УСТАНОВИТЬ статус: used → SET status: used
+- УСТАНОВИТЬ статус: deprecated → SET status: deprecated
+
+## Search Archive {#search-archive}
+
+### SEARCH (archive search, read-only)
+
+```
+SEARCH archive export_path=/path/to/conversations.json query="search terms" limit=20
+```
+
+**Parameters:**
+- `export_path`: Path to ChatGPT export file (required on first run)
+- `query`: FTS5 search query (required)
+- `limit`: Number of results (optional, default 20)
+- `reindex`: Force reindexing (optional, default false)
+
+**Russian aliases:**
+- ПОИСК архив → SEARCH archive
+- НАЙТИ в архиве → SEARCH archive
+
+**Output:** Search results with conversation IDs and snippets. Never creates knowledge blocks.
+
+**Next steps after search:**
+1. Extract snippet: `python3 tools/extract_snippet.py --id <conversation_id>`
+2. Suggest extraction: `SUGGEST extract`
+3. Extract if confirmed: `ИЗВЛЕЧЬ вывод` / `ИЗВЛЕЧЬ чеклист` / etc.
 
 ---
 

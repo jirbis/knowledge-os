@@ -43,7 +43,7 @@ The v2 plan successfully implements **most critical recommendations** (P0 and P1
 **Assessment:** Excellent. Covers all essential pre-checks.
 
 **Comparison:**
-- Review recommended: Git status, AGENTS.md exists, COMMANDS.md exists, pipeline.yaml location, uncommitted changes, rollback understanding
+- Review recommended: Git status, AGENTS.md exists, COMMANDS.md exists, `knowledge/pipelines/pipeline.yaml` location, uncommitted changes, rollback understanding
 - v2 includes: ✅ All of the above
 
 ---

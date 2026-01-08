@@ -25,14 +25,17 @@ knowledge/
     jira-decline.md
     health-parasites.md
   pipelines/
-    blog.yaml
-    book.yaml
-    email.yaml
+    pipeline.yaml
   themes/
     ai-agents.md
     jira-decline.md
     health-parasites.md
 AGENTS.md
+AGENTS/
+  Extractor.md
+  Organizer.md
+  Assembler.md
+  ArchiveSearch.md
 ```
 
 Ты **всегда работаешь внутри этого репо** в Cursor.

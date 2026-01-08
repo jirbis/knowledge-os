@@ -59,7 +59,7 @@ tags:
 - Ясно, чем кандидат может стать (глава / статья / пост)
 
 ### Pipelines
-- `pipeline.yaml` существует
+- `knowledge/pipelines/pipeline.yaml` существует
 - Описаны blog / book / email
 - Есть min_confidence
 - Есть reuse_must_include

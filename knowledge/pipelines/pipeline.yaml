@@ -1,0 +1,27 @@
+blog:
+  min_confidence: medium
+  tone: public
+  length: medium
+  reuse_must_include:
+    - blog
+
+book:
+  min_confidence: high
+  tone: deep
+  length: long
+  reuse_must_include:
+    - book
+
+email:
+  min_confidence: low
+  tone: direct
+  length: short
+  reuse_must_include:
+    - email
+
+diary:
+  min_confidence: low
+  tone: private
+  length: short
+  reuse_must_include:
+    - diary

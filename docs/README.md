@@ -17,7 +17,7 @@ Welcome to the Knowledge Operating System (KOS) documentation.
 - **[User Guide](User-Guide.md)** — Complete reference guide
   - Understanding KOS philosophy
   - Working with knowledge blocks
-  - Using agents (Extractor, Organizer, Assembler)
+  - Using agents (Extractor, Organizer, Assembler, ArchiveSearch)
   - Content candidates and pipelines
   - Daily workflow and best practices
   - Troubleshooting
@@ -32,7 +32,8 @@ Welcome to the Knowledge Operating System (KOS) documentation.
 ### Additional Resources
 
 - **[Cursor Workflow](Cursor%20Workflow.md)** — Detailed Cursor IDE workflow (in Russian)
-- **[AGENTS.md](../AGENTS.md)** — Agent specifications
+- **[AGENTS.md](../AGENTS.md)** — Agent constitution (global rules)
+- **[AGENTS/](../AGENTS/)** — Individual agent specifications
 - **[README.md](../README.md)** — Project overview
 
 ## Quick Navigation
@@ -58,8 +59,9 @@ docs/
 ## Key Concepts
 
 - **Knowledge Blocks**: Atomic, reusable units of knowledge
-- **Agents**: Extractor, Organizer, Assembler
+- **Agents**: Extractor, Organizer, Assembler, ArchiveSearch, SUGGEST
 - **Workflow**: Chat → Extract → Organize → Assemble
+- **Archive Search**: Memory system for finding past conversations
 - **Principle**: If it isn't a block, it isn't real
 
 ---

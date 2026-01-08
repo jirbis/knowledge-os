@@ -17,7 +17,7 @@ Complete index of all Knowledge Operating System (KOS) documentation.
   Complete reference guide covering:
   - KOS philosophy and mental model
   - Working with knowledge blocks
-  - Using agents (Extractor, Organizer, Assembler, SUGGEST)
+  - Using agents (Extractor, Organizer, Assembler, ArchiveSearch, SUGGEST)
   - Content candidates and pipelines
   - Daily workflow and best practices
   - Troubleshooting
@@ -43,7 +43,14 @@ Complete index of all Knowledge Operating System (KOS) documentation.
   **Single source of truth** for all commands. Defines canonical commands and Russian aliases. If a command is not here, it doesn't exist.
 
 - **[AGENTS.md](../AGENTS.md)**  
-  Agent specifications and constitution. Defines roles, responsibilities, and rules for Extractor, Organizer, and Assembler agents.
+  Agent constitution and global rules. Defines philosophy, source-of-truth hierarchy, and contracts for all agents.
+
+- **[AGENTS/](../AGENTS/)**  
+  Individual agent specifications:
+  - `AGENTS/Extractor.md` — Extraction rules and command normalization
+  - `AGENTS/Organizer.md` — Organization and coherence rules
+  - `AGENTS/Assembler.md` — Assembly rules and pipeline compliance
+  - `AGENTS/ArchiveSearch.md` — Archive search and indexing rules
 
 - **[README.md](../README.md)**  
   Project overview and core principles. High-level introduction to KOS philosophy and structure.
@@ -63,12 +70,22 @@ docs/
   User-Guide.md         # Comprehensive user guide
   Quick-Reference.md    # Command reference
   Cursor Workflow.md    # Cursor IDE workflow (Russian)
+  anti-patterns.md      # Anti-patterns checklist
+  examples-session.md    # Real usage examples
 
 ../
-  COMMANDS.md           # Command specifications
-  AGENTS.md             # Agent specifications
+  COMMANDS.md           # Command specifications (single source of truth)
+  AGENTS.md             # Agent constitution (global rules)
+  AGENTS/               # Individual agent specifications
+    Extractor.md
+    Organizer.md
+    Assembler.md
+    ArchiveSearch.md
   README.md             # Project overview
   WORKFLOW.md           # Basic workflow
+  knowledge/
+    pipelines/
+      pipeline.yaml     # Pipeline configuration
 ```
 
 ---
@@ -81,9 +98,12 @@ docs/
 - **Learn everything** → [User Guide](User-Guide.md)
 - **Look up a command** → [Quick Reference](Quick-Reference.md)
 - **See all commands** → [COMMANDS.md](../COMMANDS.md)
-- **Understand agents** → [AGENTS.md](../AGENTS.md)
+- **Understand agent rules** → [AGENTS.md](../AGENTS.md)
+- **See agent specs** → [AGENTS/](../AGENTS/)
 - **Use Cursor workflow** → [Cursor Workflow](Cursor%20Workflow.md)
 - **Get project overview** → [README.md](../README.md)
+- **Check examples** → [Examples Session](examples-session.md)
+- **Review anti-patterns** → [Anti-Patterns](anti-patterns.md)
 
 ---
 
@@ -97,7 +117,11 @@ docs/
 
 ### Agents
 
-- [AGENTS.md](../AGENTS.md) — Agent specifications
+- [AGENTS.md](../AGENTS.md) — Agent constitution and global rules
+- [AGENTS/Extractor.md](../AGENTS/Extractor.md) — Extraction agent specification
+- [AGENTS/Organizer.md](../AGENTS/Organizer.md) — Organization agent specification
+- [AGENTS/Assembler.md](../AGENTS/Assembler.md) — Assembly agent specification
+- [AGENTS/ArchiveSearch.md](../AGENTS/ArchiveSearch.md) — Archive search agent specification
 - [User Guide: Using Agents](User-Guide.md#using-agents) — How to use agents
 - [Quick Reference: Agent Commands](Quick-Reference.md#agent-commands) — Command quick lookup
 
@@ -122,14 +146,22 @@ docs/
 
 - [User Guide: Pipelines](User-Guide.md#pipelines) — Pipeline configuration
 - [README.md: Pipelines](../README.md#pipelines-knowledgepipelines) — Overview
+- Pipeline file: `knowledge/pipelines/pipeline.yaml`
+
+### Archive Search
+
+- [AGENTS/ArchiveSearch.md](../AGENTS/ArchiveSearch.md) — Archive search specification
+- [User Guide: ArchiveSearch](User-Guide.md#archive-search) — Using archive search
+- [Quick Reference: Search Archive](Quick-Reference.md#search-archive) — Command reference
 
 ---
 
 ## 🎯 Key Concepts
 
 - **Knowledge Blocks**: Atomic, reusable units of knowledge
-- **Agents**: Extractor, Organizer, Assembler, SUGGEST
+- **Agents**: Extractor, Organizer, Assembler, ArchiveSearch, SUGGEST
 - **Workflow**: Chat → Extract → Organize → Assemble
+- **Archive Search**: Memory system for finding past conversations
 - **Core Principle**: If it isn't a block, it isn't real
 
 ---

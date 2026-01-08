@@ -41,7 +41,7 @@ articles/
 posts/
 
 pipelines/ # Routing rules (what goes where)
-pipeline.yaml
+knowledge/pipelines/pipeline.yaml
 
 themes/ # Theme definitions (stable concepts)
 

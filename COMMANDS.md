@@ -169,7 +169,7 @@ ASSEMBLE email
 
 ### Правила нормализации
 
-- Assembly MUST follow pipeline.yaml strictly
+- Assembly MUST follow `knowledge/pipelines/pipeline.yaml` strictly
 - Assembler may ONLY use existing blocks and candidates
 - If required blocks are missing, stop and report
 

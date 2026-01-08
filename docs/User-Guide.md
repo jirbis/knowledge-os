@@ -327,6 +327,58 @@ Sources:
 ---
 ```
 
+### ArchiveSearch Agent
+
+**Purpose:** Search past ChatGPT conversations without creating knowledge blocks.
+
+**When to use:**
+- When you remember discussing something but can't find it
+- Before extracting to avoid duplicating existing knowledge
+- When you need context from past conversations
+
+**How to trigger:**
+```
+SEARCH archive export_path=/path/to/conversations.json query="search terms" limit=20
+```
+
+**Parameters:**
+- `export_path`: Path to ChatGPT export file (required on first run)
+- `query`: FTS5 search query (required)
+- `limit`: Number of results (optional, default 20)
+- `reindex`: Force reindexing (optional, default false)
+
+**Russian aliases:**
+- ПОИСК архив → SEARCH archive
+- НАЙТИ в архиве → SEARCH archive
+
+**What it does:**
+- Automatically indexes ChatGPT exports if needed
+- Performs full-text search using FTS5
+- Returns ranked results with conversation IDs and snippets
+- Provides next-step commands for extraction
+
+**What it doesn't do:**
+- Create or modify knowledge blocks
+- Write to `knowledge/blocks/` or `knowledge/candidates/`
+- Execute EXTRACT automatically
+
+**Typical workflow:**
+1. Search: `SEARCH archive query="jira workflows"`
+2. Review results and select conversation
+3. Extract snippet: `python3 tools/extract_snippet.py --id <conversation_id>`
+4. Suggest extraction: `SUGGEST extract`
+5. Extract if confirmed: `ИЗВЛЕЧЬ вывод` / `ИЗВЛЕЧЬ чеклист` / etc.
+
+**FTS5 Query Tips:**
+- **Exact phrase:** `"executable protocols"`
+- **Boolean:** `jira OR confluence`
+- **Proximity:** `jira NEAR/5 workflow`
+- **Exclude:** `jira NOT datacenter`
+
+**Allowed paths:**
+- Creates/updates: `index/chats.sqlite`, `archive/normalized/*`
+- Never touches: `knowledge/blocks/`, `knowledge/candidates/`, `output/`
+
 ### SUGGEST Agent (Advisory Mode)
 
 **Purpose:** Propose actions without creating files.

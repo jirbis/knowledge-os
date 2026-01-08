@@ -100,17 +100,21 @@ Blocks are atomic, reusable units of knowledge. Each block:
 
 ### Agents
 
-Three agents handle different aspects:
+Four main agents handle different aspects:
 
 - **Extractor**: Creates blocks from conversations
 - **Organizer**: Maintains system coherence
 - **Assembler**: Builds content from blocks
+- **ArchiveSearch**: Searches past conversations (read-only memory)
+
+Plus **SUGGEST** mode for advisory-only operations.
 
 ## Next Steps
 
 - Read the [User Guide](User-Guide.md) for detailed instructions
 - Check the [Quick Reference](Quick-Reference.md) for common commands
-- Review [AGENTS.md](../AGENTS.md) for agent specifications
+- Review [AGENTS.md](../AGENTS.md) for agent constitution
+- See [AGENTS/](../AGENTS/) for individual agent specifications
 
 ## Important Rules
 
