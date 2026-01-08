@@ -58,6 +58,9 @@ Complete index of all Knowledge Operating System (KOS) documentation.
 - **[WORKFLOW.md](../WORKFLOW.md)**  
   Basic workflow overview (in Russian).
 
+- **[BACKLOG.md](../BACKLOG.md)**  
+  Planned features and future tasks (connectors, integrations, enhancements).
+
 ---
 
 ## 🗂️ Documentation Structure
@@ -150,9 +153,13 @@ docs/
 
 ### Archive Search
 
-- [AGENTS/ArchiveSearch.md](../AGENTS/ArchiveSearch.md) — Archive search specification
+- [AGENTS/ArchiveSearch.md](../AGENTS/ArchiveSearch.md) — Archive search specification (ChatGPT & Telegram)
 - [User Guide: ArchiveSearch](User-Guide.md#archive-search) — Using archive search
 - [Quick Reference: Search Archive](Quick-Reference.md#search-archive) — Command reference
+
+**Supported sources:**
+- ChatGPT exports (`conversations.json`)
+- Telegram exports (JSON format)
 
 ---
 

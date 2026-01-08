@@ -329,7 +329,7 @@ Sources:
 
 ### ArchiveSearch Agent
 
-**Purpose:** Search past ChatGPT conversations without creating knowledge blocks.
+**Purpose:** Search past conversations from ChatGPT or Telegram exports without creating knowledge blocks.
 
 **When to use:**
 - When you remember discussing something but can't find it
@@ -337,13 +337,21 @@ Sources:
 - When you need context from past conversations
 
 **How to trigger:**
+
+**For ChatGPT:**
 ```
 SEARCH archive export_path=/path/to/conversations.json query="search terms" limit=20
 ```
 
+**For Telegram:**
+```
+SEARCH archive export_path=/path/to/telegram_export.json source_type=telegram query="search terms" limit=20
+```
+
 **Parameters:**
-- `export_path`: Path to ChatGPT export file (required on first run)
+- `export_path`: Path to export file (ChatGPT `conversations.json` or Telegram export) (required on first run)
 - `query`: FTS5 search query (required)
+- `source_type`: Export source type - `chatgpt` or `telegram` (optional, auto-detected if not specified)
 - `limit`: Number of results (optional, default 20)
 - `reindex`: Force reindexing (optional, default false)
 
@@ -352,8 +360,9 @@ SEARCH archive export_path=/path/to/conversations.json query="search terms" limi
 - НАЙТИ в архиве → SEARCH archive
 
 **What it does:**
-- Automatically indexes ChatGPT exports if needed
-- Performs full-text search using FTS5
+- Automatically indexes ChatGPT or Telegram exports if needed
+- Detects export source type automatically (or uses `source_type` parameter)
+- Performs full-text search using FTS5 across all indexed sources
 - Returns ranked results with conversation IDs and snippets
 - Provides next-step commands for extraction
 

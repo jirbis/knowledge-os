@@ -1,5 +1,3 @@
-# knowledge/blocks/checklists/repository-readiness-knowledge-os.md
-
 ---
 type: checklist
 themes:
@@ -19,72 +17,72 @@ tags:
   - workflow
 ---
 
-## Repository Readiness Checklist — Knowledge OS
+# Repository Readiness Checklist — Knowledge OS
 
-### Базовая структура
-- README.md существует
-- AGENTS.md существует
-- COMMANDS.md существует
-- Папка `knowledge/` создана
-- В `knowledge/` есть: blocks / candidates / pipelines
+## Basic Structure
+- README.md exists
+- AGENTS.md exists
+- COMMANDS.md exists
+- `knowledge/` directory created
+- `knowledge/` contains: blocks / candidates / pipelines
 
-### Агенты
-- Есть AGENTS/Extractor.md
-- Есть AGENTS/Organizer.md
-- Есть AGENTS/Assembler.md
-- В каждом агенте есть `Command normalization`
-- В каждом агенте описан `SUGGEST` режим
+## Agents
+- AGENTS/Extractor.md exists
+- AGENTS/Organizer.md exists
+- AGENTS/Assembler.md exists
+- Each agent has `Command normalization` section
+- Each agent describes `SUGGEST` mode
 
-### Командная дисциплина
-- Все команды определены в COMMANDS.md
-- Русские алиасы задокументированы
-- Нет “скрытых” или устных команд
-- Разговорная речь не вызывает действий
+## Command Discipline
+- All commands defined in COMMANDS.md
+- Russian aliases documented
+- No "hidden" or verbal commands
+- Conversational speech does not trigger actions
 
-### Knowledge blocks
-- 1 файл = 1 идея
-- Нет дат в именах файлов
-- Есть frontmatter
-- Указан type
-- Есть минимум 1 theme
-- Указан reuse
-- Блок читаем вне контекста
+## Knowledge Blocks
+- 1 file = 1 idea
+- No dates in filenames
+- Frontmatter present
+- Type specified
+- At least 1 theme specified
+- Reuse specified
+- Block is readable without context
 
-### Content candidates
-- Папка `knowledge/candidates/` существует
-- Есть хотя бы один candidate
-- Candidate не дублирует blocks
-- Есть status
-- Есть source_blocks
-- Ясно, чем кандидат может стать (глава / статья / пост)
+## Content Candidates
+- `knowledge/candidates/` directory exists
+- At least one candidate exists
+- Candidate does not duplicate blocks
+- Status present
+- source_blocks present
+- Clear what candidate can become (chapter / article / post)
 
-### Pipelines
-- `knowledge/pipelines/pipeline.yaml` существует
-- Описаны blog / book / email
-- Есть min_confidence
-- Есть reuse_must_include
-- Ассемблер ограничен правилами pipeline
+## Pipelines
+- `knowledge/pipelines/pipeline.yaml` exists
+- blog / book / email described
+- min_confidence specified
+- reuse_must_include specified
+- Assembler constrained by pipeline rules
 
-### Output
-- Папка `output/` существует
-- Output не редактируется вручную
-- В output есть секция Sources
-- Sources указывают на blocks / candidates
+## Output
+- `output/` directory exists
+- Output is not edited manually
+- Output contains Sources section
+- Sources point to blocks / candidates
 
-### SUGGEST режим
-- `ПРЕДЛОЖИ извлечение` не создаёт файлов
-- `ПРЕДЛОЖИ сборку` не создаёт output
-- После SUGGEST требуется явное подтверждение
-- Без команды ничего не происходит
+## SUGGEST Mode
+- `SUGGEST extract` does not create files
+- `SUGGEST assembly` does not create output
+- Explicit confirmation required after SUGGEST
+- Nothing happens without a command
 
-### Git и обратимость
-- Репозиторий под git
-- Коммиты маленькие и осмысленные
-- Любое действие можно откатить
-- Нет изменений без коммита
+## Git and Reversibility
+- Repository under git
+- Commits are small and meaningful
+- Any action can be reverted
+- No changes without commit
 
-### Финальный тест
-- Понятно, какие идеи существуют
-- Понятно, что из них — кандидаты
-- Видно, что уже использовано
-- Можно быстро собрать контент без генерации заново
+## Final Test
+- Clear what ideas exist
+- Clear which are candidates
+- Visible what has been used
+- Can quickly assemble content without regenerating

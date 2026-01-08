@@ -286,13 +286,20 @@ SET status: deprecated
 
 ### SEARCH (archive search, read-only)
 
+**For ChatGPT:**
 ```
 SEARCH archive export_path=/path/to/conversations.json query="search terms" limit=20
 ```
 
+**For Telegram:**
+```
+SEARCH archive export_path=/path/to/telegram_export.json source_type=telegram query="search terms" limit=20
+```
+
 **Parameters:**
-- `export_path`: Path to ChatGPT export file (required on first run)
+- `export_path`: Path to export file (ChatGPT `conversations.json` or Telegram export) (required on first run)
 - `query`: FTS5 search query (required)
+- `source_type`: Export source type - `chatgpt` or `telegram` (optional, auto-detected if not specified)
 - `limit`: Number of results (optional, default 20)
 - `reindex`: Force reindexing (optional, default false)
 

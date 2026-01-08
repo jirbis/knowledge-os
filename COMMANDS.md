@@ -323,9 +323,9 @@ SET status: deprecated
 Если команда не написана — ничего не происходит.
 
 
-## 🔹 SEARCH — поиск по архиву ChatGPT (read-only)
+## 🔹 SEARCH — поиск по архиву (ChatGPT/Telegram) (read-only)
 
-Поиск по экспортированным чатам ChatGPT  
+Поиск по экспортированным чатам ChatGPT или Telegram  
 с автоматической FTS5-индексацией при необходимости.
 
 SEARCH **никогда не создаёт knowledge blocks**.  
@@ -342,15 +342,23 @@ SEARCH archive
 ### Поддерживаемые параметры
 
 ```
-export_path=<path/to/conversations.json>  # обязательно при первом запуске
+export_path=<path/to/export>              # обязательно при первом запуске
 query="<fts query>"                       # обязательно
+source_type=<chatgpt|telegram>            # опционально, auto-detect если не указан
 limit=<int>                               # опционально, default 20
 reindex=<true|false>                      # опционально, default false
 ```
 
-**Пример:**
+**Примеры:**
+
+ChatGPT:
 ```
 SEARCH archive export_path=/Users/me/Downloads/conversations.json query="jira NEAR/5 workflow" limit=20
+```
+
+Telegram:
+```
+SEARCH archive export_path=/Users/me/Downloads/telegram_export.json source_type=telegram query="project discussion" limit=20
 ```
 
 ### Русские алиасы
@@ -379,7 +387,7 @@ SEARCH archive export_path=/Users/me/Downloads/conversations.json query="jira NE
 - Создание / обновление:
   - `index/chats.sqlite`
   - `archive/normalized/*`
-- Чтение `conversations.json`
+- Чтение экспортных файлов (ChatGPT `conversations.json` или Telegram export)
 
 ---
 

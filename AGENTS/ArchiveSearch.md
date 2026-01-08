@@ -1,10 +1,14 @@
-# AGENT: ArchiveSearch (ChatGPT Export → FTS5 Index → Search)
+# AGENT: ArchiveSearch (ChatGPT/Telegram Export → FTS5 Index → Search)
 
 ## Purpose
-Given a path to a ChatGPT export file `conversations.json`, this agent:
+Given a path to an export file (ChatGPT `conversations.json` or Telegram export), this agent:
 1) ensures a SQLite FTS5 index exists and is up to date (ingest if needed)
 2) runs a full-text search query
 3) returns ranked results + next-step commands for extracting blocks
+
+## Supported Sources
+- **ChatGPT**: `conversations.json` export file
+- **Telegram**: Telegram export (JSON format)
 
 ## Scope
 Input:
@@ -29,9 +33,10 @@ Output:
 - Export copy dir (optional): `archive/exports/`
 
 ## Tooling (expected)
-- `tools/ingest_chatgpt_export.py`
-- `tools/search_archive.py`
-- `tools/extract_snippet.py`
+- `tools/ingest_chatgpt_export.py` - for ChatGPT exports
+- `tools/ingest_telegram_export.py` - for Telegram exports (to be created)
+- `tools/search_archive.py` - unified search (works with both sources)
+- `tools/extract_snippet.py` - extract conversation snippets
 
 ## Operating rules
 
@@ -45,13 +50,26 @@ Indexing is required if any of these is true:
 If indexing is required, run ingest.
 
 ### 2) Indexing command
-Run:
+
+**For ChatGPT exports:**
 ```bash
 python3 tools/ingest_chatgpt_export.py \
   --input "<export_path>" \
   --db "index/chats.sqlite" \
-  --normalized-dir "archive/normalized"
+  --normalized-dir "archive/normalized" \
+  --source "chatgpt_export"
 ```
+
+**For Telegram exports:**
+```bash
+python3 tools/ingest_telegram_export.py \
+  --input "<export_path>" \
+  --db "index/chats.sqlite" \
+  --normalized-dir "archive/normalized" \
+  --source "telegram_export"
+```
+
+The agent MUST detect the source type automatically or use the `source_type` parameter if provided in the command.
 
 ### 3) Search command
 Run:
@@ -98,8 +116,8 @@ If anything fails:
 - propose the minimal fix (missing Python, missing FTS5, wrong path, etc.)
 
 ### 6) Security & privacy
-- Treat `conversations.json` as sensitive.
-- Do not upload it anywhere.
+- Treat export files (ChatGPT `conversations.json` or Telegram exports) as sensitive.
+- Do not upload them anywhere.
 - Do not include long dumps in chat; use snippets.
 
 ## Command normalization
