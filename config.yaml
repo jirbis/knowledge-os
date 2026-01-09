@@ -1,10 +1,10 @@
-architecture: dual-repo
+architecture: "monorepo"
 knowledge:
-  root_path: ../knowledge-base/knowledge
-  integration: external
-  read_only: true
-  enforce_read_only: true
-pipeline:
+  root_path: "./knowledge"  # Inside same repository
+  integration: "internal"
+  read_only: false
+  enforce_read_only: true  # Still validate boundaries
+peline:
   config_path: ./knowledge/pipelines/pipeline.yaml
   output_dir: ./output
   enforce_boundaries: true
