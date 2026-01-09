@@ -1,67 +1,21 @@
-# Knowledge OS Configuration
-# Supports multi-repository architectures: dual-repo, submodule, monorepo
-
-# Architecture type: "monorepo" | "dual-repo" | "submodule"
-architecture: "monorepo"
-
-# Knowledge repository configuration
-# Used when architecture is "dual-repo" or "submodule"
+architecture: dual-repo
 knowledge:
-  # Path to external knowledge repository
-  # Can be relative (../knowledge-base/knowledge) or absolute
-  root_path: "./knowledge"
-  
-  # Integration method: "submodule" | "external" | "internal"
-  integration: "internal"
-  
-  # Submodule path (if using submodule integration)
-  submodule_path: null
-  
-  # Read-only mode enforcement (default: true for external repos)
-  read_only: false
-  
-  # Validation: prevent writing to knowledge repo from pipeline
-  enforce_read_only: true
-
-# Chat archive configuration
-chat_archive:
-  # Path to chat archive repository
-  root_path: "./archive"
-  
-  # Integration method: "submodule" | "external" | "internal"
-  integration: "internal"
-  
-  # Submodule path (if using submodule integration)
-  submodule_path: null
-  
-  # Read-only mode (always true for chat archives)
+  root_path: ../knowledge-base/knowledge
+  integration: external
   read_only: true
-
-# Pipeline configuration
+  enforce_read_only: true
 pipeline:
-  # Path to pipeline configuration file
-  config_path: "./knowledge/pipelines/pipeline.yaml"
-  
-  # Output directory
-  output_dir: "./output"
-  
-  # Validation: prevent pipeline from writing to knowledge repo
+  config_path: ./knowledge/pipelines/pipeline.yaml
+  output_dir: ./output
   enforce_boundaries: true
-
-# Repository boundaries (validation rules)
 boundaries:
-  # Never allow these paths to be written by pipeline
   protected_paths:
-    - "./knowledge/blocks"
-    - "./knowledge/candidates"
-    - "./knowledge/INVARIANTS.md"
-    - "./knowledge/DECISIONS.md"
-    - "./knowledge/MAP.md"
-  
-  # Allowed paths for pipeline output
+  - ./knowledge/blocks
+  - ./knowledge/candidates
+  - ./knowledge/INVARIANTS.md
+  - ./knowledge/DECISIONS.md
+  - ./knowledge/MAP.md
   allowed_output_paths:
-    - "./output"
-    - "./drafts"
-  
-  # Validate before assembly operations
+  - ./output
+  - ./drafts
   validate_before_assembly: true

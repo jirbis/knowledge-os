@@ -1,4 +1,4 @@
-# How to Connect Repositories
+свюю# How to Connect Repositories
 
 Practical guide for setting up directory structure and connecting repositories in Knowledge OS.
 
