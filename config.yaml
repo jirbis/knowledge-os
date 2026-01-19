@@ -1,0 +1,9 @@
+pipeline:
+  output_dir: ./export
+  enforce_boundaries: true
+boundaries:
+  protected_paths:
+    - ./blocks
+  allowed_output_paths:
+    - ./export
+  validate_before_assembly: true
