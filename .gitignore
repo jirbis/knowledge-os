@@ -1,0 +1,23 @@
+blocks
+!blocks/.keep
+
+# Local-only / custom configuration
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.cursorignore
+*.code-workspace
+*.swp
+*.swo
+*~
+*.log
+__pycache__/
+*.pyc
+.env
+.env.*
+export
+drafts
+index
+import
+
