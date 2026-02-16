@@ -28,4 +28,4 @@ blocks
 export/
 !export/.keep
 .claude/settings.local.json
-.codex/settings.local.json
+.cursor/settings.local.json
