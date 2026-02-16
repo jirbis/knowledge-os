@@ -23,4 +23,9 @@ index
 !index/.keep
 import
 !import/.keep
-
+blocks
+!blocks/.keep
+export/
+!export/.keep
+.claude/settings.local.json
+.codex/settings.local.json

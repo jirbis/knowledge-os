@@ -1,4 +1,4 @@
-# SEARCH — archive search (ChatGPT/Telegram) (read-only)
+# SEARCH — import search (ChatGPT/Telegram) (read-only)
 
 ## Purpose
 
@@ -21,7 +21,7 @@ It only finds raw material for subsequent `SUGGEST` / `EXTRACT`.
 ## Scope
 
 **Input:**
-- `SEARCH archive ...` command
+- `SEARCH import  ...` command
 
 **Output:**
 - ranked search results (snippets)
@@ -30,13 +30,13 @@ It only finds raw material for subsequent `SUGGEST` / `EXTRACT`.
 ## Canonical command (internal)
 
 ```
-SEARCH archive
+SEARCH import
 ```
 
 ## Supported parameters
 
 ```
-export_path=<path/to/export>              # required on first run
+filename=<path/to/export>              # required on first run
 query="<fts query>"                       # required
 source_type=<chatgpt|telegram>            # optional, auto-detect if not specified
 limit=<int>                               # optional, default 20
@@ -47,18 +47,14 @@ reindex=<true|false>                      # optional, default false
 
 ChatGPT:
 ```
-SEARCH archive export_path=$GIT_ROOT/conversations.json query="jira NEAR/5 workflow" limit=20
+SEARCH import filename=$GIT_ROOT/conversations.json query="jira NEAR/5 workflow" limit=20
 ```
 
 Telegram:
 ```
-SEARCH archive export_path=telegram_export.json source_type=telegram query="project discussion" limit=20
+SEARCH import filename=telegram_export.json source_type=telegram query="project discussion" limit=20
 ```
 
-## Russian aliases
-
-- ПОИСК архив → SEARCH archive
-- НАЙТИ в архиве → SEARCH archive
 
 ## Allowed actions
 
@@ -105,7 +101,7 @@ See `.cursor/rules.md` §8 for idempotent indexing rules.
 **For ChatGPT exports:**
 ```bash
 python3 tools/ingest_chatgpt_export.py \
-  --input "<export_path>" \
+  --input "<filename>" \
   --db "index/chats.sqlite" \
   --normalized-dir "import/normalized" \
   --source "chatgpt_export"
@@ -114,7 +110,7 @@ python3 tools/ingest_chatgpt_export.py \
 **For Telegram exports:**
 ```bash
 python3 tools/ingest_telegram_export.py \
-  --input "<export_path>" \
+  --input "<filename>" \
   --db "index/chats.sqlite" \
   --normalized-dir "import/normalized" \
   --source "telegram_export"
@@ -139,7 +135,7 @@ Return results in this exact structure:
 **Index status:**
 - indexed: yes/no
 - db_path
-- export_path
+- filename
 - conversations_processed (if reindexed)
 
 **Search results (ranked):**
@@ -176,7 +172,7 @@ If anything fails:
 ## Typical workflow
 
 ```
-SEARCH archive ...
+SEARCH import ...
 ↓
 (view results)
 ↓
