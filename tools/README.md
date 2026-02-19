@@ -187,7 +187,33 @@ Ingest ChatGPT export into FTS5 index.
 
 ### `ingest_telegram_export.py`
 
-(To be created) Ingest Telegram export into FTS5 index.
+Ingest Telegram JSON export (`result.json`) into the shared FTS5 index. Supports single-chat
+and all-chats exports, incremental re-ingestion, and optional media file sync.
+
+```bash
+# Single-chat or all-chats export
+python3 tools/ingest_telegram_export.py \
+  --input /path/to/result.json \
+  --db index/chats.sqlite \
+  --normalized-dir import/normalized
+
+# With photos directory
+python3 tools/ingest_telegram_export.py \
+  --input /path/to/result.json \
+  --images-dir /path/to/photos \
+  --images-dest import/images
+
+# Force full reprocess
+python3 tools/ingest_telegram_export.py \
+  --input /path/to/result.json \
+  --force
+```
+
+**Flags:** `--input`, `--db`, `--normalized-dir`, `--source`, `--force`, `--images-dir`, `--images-dest`
+
+Conversation IDs are prefixed with `telegram_` (e.g. `telegram_12345`) to avoid collisions with
+ChatGPT UUIDs in the shared database. Incremental detection uses the last message timestamp as
+`update_time`.
 
 ### `search_archive.py`
 
