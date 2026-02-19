@@ -28,7 +28,11 @@
       "Bash(sysctl:*)",
       "Bash(system_profiler:*)",
       "Bash(pkill:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(head:*)",
+      "Bash(wc:*)",
+      "Bash(xargs:*)",
+      "Bash(sqlite3:*)"
     ]
   }
 }

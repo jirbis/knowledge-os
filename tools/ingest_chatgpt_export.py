@@ -131,6 +131,16 @@ def iter_messages(conv: Dict[str, Any]) -> List[Tuple[Optional[str], str, str]]:
     return out
 
 
+def load_existing_update_times(db_path: Path) -> Dict[str, Optional[str]]:
+    """Return {conversation_id: update_time} for all rows already in the DB."""
+    if not db_path.exists():
+        return {}
+    conn = sqlite3.connect(str(db_path))
+    rows = conn.execute("SELECT id, update_time FROM conversations").fetchall()
+    conn.close()
+    return {row[0]: row[1] for row in rows}
+
+
 def ensure_db(db_path: Path) -> sqlite3.Connection:
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(db_path))
@@ -175,6 +185,18 @@ def ensure_db(db_path: Path) -> sqlite3.Connection:
             role TEXT,
             content TEXT,
             PRIMARY KEY (conversation_id, msg_id)
+        );
+        """
+    )
+
+    # Tracks images copied from ChatGPT exports (incremental image sync)
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS imported_images (
+            filename TEXT PRIMARY KEY,
+            source_path TEXT,
+            dest_path TEXT,
+            imported_at TEXT
         );
         """
     )
@@ -257,12 +279,41 @@ def write_normalized_md(out_dir: Path, conv: Dict[str, Any], messages: List[Tupl
     return path
 
 
+def sync_images(images_dir: Path, dest_dir: Path, conn: sqlite3.Connection) -> Tuple[int, int]:
+    """Copy new image files from images_dir to dest_dir. Returns (copied, skipped)."""
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    existing = {row[0] for row in conn.execute("SELECT filename FROM imported_images")}
+    copied, skipped = 0, 0
+    for img_path in sorted(images_dir.iterdir()):
+        if not img_path.is_file():
+            continue
+        if img_path.name in existing:
+            skipped += 1
+            continue
+        dest = dest_dir / img_path.name
+        dest.write_bytes(img_path.read_bytes())
+        now = datetime.now(tz=timezone.utc).isoformat()
+        conn.execute(
+            "INSERT OR IGNORE INTO imported_images (filename, source_path, dest_path, imported_at) "
+            "VALUES (?, ?, ?, ?)",
+            (img_path.name, str(img_path), str(dest), now),
+        )
+        copied += 1
+    return copied, skipped
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Ingest ChatGPT export conversations.json into normalized markdown + SQLite FTS5 index.")
     ap.add_argument("--input", required=True, help="Path to conversations.json (from ChatGPT export)")
     ap.add_argument("--db", default="index/chats.sqlite", help="SQLite db path")
     ap.add_argument("--normalized-dir", default="import/normalized", help="Where to write normalized markdown")
     ap.add_argument("--source", default="chatgpt_export", help="Source label")
+    ap.add_argument("--force", action="store_true",
+                    help="Reprocess all conversations even if update_time is unchanged")
+    ap.add_argument("--images-dir", default=None,
+                    help="Path to image directory from ChatGPT export (e.g. dalle_images/)")
+    ap.add_argument("--images-dest", default="import/images",
+                    help="Destination directory for copied images (default: import/images)")
     args = ap.parse_args()
 
     input_path = Path(args.input)
@@ -280,26 +331,55 @@ def main() -> None:
         raise SystemExit("Unsupported export format: expected list or dict with 'conversations'")
 
     conn = ensure_db(db_path)
-    processed = 0
+
+    # Load existing update_times for incremental mode
+    existing_times: Dict[str, Optional[str]] = {} if args.force else load_existing_update_times(db_path)
+
+    stats = {"new": 0, "updated": 0, "skipped": 0}
+    commit_counter = 0
 
     for conv in conversations:
         cid = conv.get("id") or conv.get("conversation_id")
         if not cid:
             continue
 
+        export_update_time = iso_from_unix(conv.get("update_time"))
+
+        if not args.force and cid in existing_times:
+            if existing_times[cid] == export_update_time:
+                stats["skipped"] += 1
+                continue
+            stats["updated"] += 1
+        else:
+            stats["new"] += 1
+
         msgs = iter_messages(conv)
         upsert_conversation(conn, conv, args.source)
         refresh_messages(conn, cid, msgs)
         write_normalized_md(normalized_dir, conv, msgs)
-        processed += 1
+        commit_counter += 1
 
-        if processed % 50 == 0:
+        if commit_counter % 50 == 0:
             conn.commit()
 
     conn.commit()
+
+    # Sync images if requested
+    img_copied, img_skipped = 0, 0
+    if args.images_dir:
+        images_dir = Path(args.images_dir)
+        if images_dir.is_dir():
+            img_copied, img_skipped = sync_images(images_dir, Path(args.images_dest), conn)
+            conn.commit()
+        else:
+            print(f"Warning: --images-dir '{images_dir}' is not a directory, skipping image sync")
+
     conn.close()
 
-    print(f"OK: processed {processed} conversations")
+    total = stats["new"] + stats["updated"] + stats["skipped"]
+    print(f"Conversations: {stats['new']} new, {stats['updated']} updated, {stats['skipped']} skipped (of {total} total)")
+    if args.images_dir:
+        print(f"Images: {img_copied} copied, {img_skipped} skipped")
     print(f"DB: {db_path}")
     print(f"Normalized: {normalized_dir}")
 
